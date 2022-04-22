@@ -1,0 +1,454 @@
+"Task ID","Task Name","Status","Task Content","Assignee","Priority","Latest Comment","Comment Count","Assigned Comment Count","Due Date","Start Date","Date Created","Date Updated","Date Closed","Created By","Space","Folder","List","Subtask ID's","Subtask URL's","tags","Lists","Sprints","Time Logged","Time Estimate","Points Estimate","Points Estimate Rolled Up"
+"1tyget5","HW6: Customer issues","assigned","
+Please read issues found by the customer, log them and update your checklist.
+1. There is a wrong validation message on  'Checkout page' if Order Total > Current Balance
+2. Shop page (V1)-> 'Popularity' sorting option presents only for new version and missing on Legacy.
+3. Order page (admin role) -> missing 'Add order' button and 'actions' buttons on Legacy.
+4. 500 server error if customer trying to view product detail page with apostrophe in the name
+5. On ""Product"" page in section ""Related products"" buttons are placed partialy over the price.
+6. Duplicated last crumb in breadcrumbs on 'Product category' page.
+7. Checkout -> Product items with quantity more than 1 on the 'Card' page are counted as quantity equal to 1 on 'checkout'.
+
+","[Anna Buhai]","none","",0,0,"","","Friday, November 19th 2021, 8:19:58 pm +02:00","Wednesday, December 1st 2021, 7:03:22 pm +02:00","","Tetiana Semenova","HW: Loyalty","HW6: T2021_10 Loyalty","V1","[]","[]","","[V1]","[]","","",,0
+"1w8rkhn","HW9: Customer issues","assigned","Please read issues found by the customer
+
+1. Total amount of points for order debited from balance never exceeds 65535 points.
+2. 'Logout' is shown on the login page for unauthorized user
+
+","[Anna Buhai]","none","",0,0,"","","Thursday, December 2nd 2021, 9:22:48 pm +02:00","Thursday, December 2nd 2021, 9:23:05 pm +02:00","","Tetiana Semenova","HW: Loyalty","HW6: T2021_10 Loyalty","V1","[]","[]","","[V1]","[]","","",,0
+"1wee65y","Reviews from product don't delete when the Delete product review endpoint is requested","in progress","When we call the Delete product review endpoint in product we choose ID of review which we want to remove. However, when we use the delete product review endpoint we don't have permission to make a request.
+
+
+Severity: Minor
+Build: v1
+
+Step to reproduce:
+1. Call the Delete product review endpoint
+DELETE https://qa-loyalty.teaminternational.com/v1/wp-json/wc/v2/products/362/reviews/17682
+{
+""force"":""true""
+}
+2. Auth 
+Key ck_a47b79beec855b4828ca5f109816c553940dec0b
+Secret cs_9cdf55f7d6d359f7d2042befd3c470126453ea3c 
+Type Basic 
+
+2. Submit a request 
+Expected result: review ID 17682 by product ID 362 is successfully 
+Actual result: status of request is 403 - you cannot delete this resource
+","[]","NORMAL","",0,0,"","","Friday, December 3rd 2021, 10:42:41 pm +02:00","Sunday, December 5th 2021, 11:29:47 pm +02:00","","Anna Buhai","HW: Loyalty","HW6: T2021_10 Loyalty","V1 + API ","[]","[]","","[V1 + API ]","[]","","",,0
+"1weh8zp","Reviews for product don't posting with 1 or 2 stars when the Create product review is request","in progress","When we call the Create product review endpoint in product we can add rating, review, name and emali. However, when we put 1 or 2 rating - rating changed to 3. 
+
+For more information please refer to screenshot 
+Severity: Minor
+Build: v1
+
+Step to reproduce:
+1. Call the Create product review endpoint
+POST https://qa-loyalty.teaminternational.com/v1/wp-json/wc/v2/products/362/reviews
+{
+""rating"":""2"",
+""review"":""Vaba dab lab"",
+""name"":""Rick"",
+""email"":""somemail@someerver.net""
+}
+2. Auth 
+Key ck_a47b79beec855b4828ca5f109816c553940dec0b
+Secret cs_9cdf55f7d6d359f7d2042befd3c470126453ea3c 
+Type Basic 
+
+2. Submit a request 
+Expected result:  Posted review with a rating of 2
+Actual result: posted a review with a rating of 3
+","[]","NORMAL","",0,0,"","","Sunday, December 5th 2021, 12:19:51 pm +02:00","Sunday, December 5th 2021, 11:30:02 pm +02:00","","Anna Buhai","HW: Loyalty","HW6: T2021_10 Loyalty","V1 + API ","[]","[]","","[V1 + API ]","[]","","",,0
+"1wehjrk","Debiting more than 1000 points on wallet balance, it decreased only by 1000 points when Change wallet balance is request","in progress","When we call the Change wallet balance endpoint by debiting the balance must decrease in this sum. But when we change the debit balance more than 1000 points are reduced only to 1000. 
+
+For more information please refer to screenshot - the balance before changing, the balance after changing 
+Severity: Critical
+Build: v1
+
+Step to reproduce:
+1. Call the Get wallet balance endpoint
+GET https://qa-loyalty.teaminternational.com/v1/wp-json/wc/v2/wallet/balance/36
+2. Call the Change wallet balance endpoint
+POST {
+""type"": ""debit"",
+""amount"": ""2000"",
+""details"": ""Credit 2000 points with API request""
+}
+3. Again call the Get wallet balance
+GET https://qa-loyalty.teaminternational.com/v1/wp-json/wc/v2/wallet/balance/36
+4. Auth 
+Key ck_a47b79beec855b4828ca5f109816c553940dec0b
+Secret cs_9cdf55f7d6d359f7d2042befd3c470126453ea3c 
+Type Basic 
+5. Submit a request 
+Expected result: The wallet balance decreasing by 2000 points 
+Actual result: The wallet balance decreased by 1000 points 
+
+","[]","URGENT","",0,0,"","","Sunday, December 5th 2021, 1:49:34 pm +02:00","Sunday, December 5th 2021, 11:30:11 pm +02:00","","Anna Buhai","HW: Loyalty","HW6: T2021_10 Loyalty","V1 + API ","[]","[]","","[V1 + API ]","[]","","",,0
+"1wej40v","Not all products returns when Get product list is requested","in progress","When we call the Get product list endpoint we expected we get all the products on the list. But now returns only 10 products.
+
+For more information please refer to screenshot 
+Severity: Minor
+Build: v1
+
+Step to reproduce:
+1. Call the Get product list endpoint
+GET https://qa-loyalty.teaminternational.com/v1/wp-json/wc/v2/products
+
+2. Auth 
+Key ck_a47b79beec855b4828ca5f109816c553940dec0b
+Secret cs_9cdf55f7d6d359f7d2042befd3c470126453ea3c 
+Type Basic 
+
+3. Submit a request 
+Expected result:  All of products is returns in this enpoints
+Actual result: returns only 10 products
+","[]","none","",0,0,"","","Sunday, December 5th 2021, 5:05:18 pm +02:00","Sunday, December 5th 2021, 11:30:22 pm +02:00","","Anna Buhai","HW: Loyalty","HW6: T2021_10 Loyalty","V1 + API ","[]","[]","","[V1 + API ]","[]","","",,0
+"1wej5pe","The balance of player with ID 0 the same with one with ID 2 when Get wallet balance is requested","in progress","The players with ID 0 and ID 2 have the same balance and count like one person.
+
+For more information please refer to screenshots: balance of ID 0, the balance of ID 2
+Severity: Major
+Build: v1
+
+Step to reproduce:
+1. Call the Get wallet balance endpoint
+GET https://qa-loyalty.teaminternational.com/v1/wp-json/wc/v2/wallet/balance/0
+
+2. Auth 
+Key ck_a47b79beec855b4828ca5f109816c553940dec0b
+Secret cs_9cdf55f7d6d359f7d2042befd3c470126453ea3c 
+Type Basic 
+
+3. Remember player balance
+4. Get https://qa-loyalty.teaminternational.com/v1/wp-json/wc/v2/wallet/balance/2
+Expected result:  The balance of players isn't the same (if product manager said said player with ID 0 exists)
+OR the balance of player with ID 0 an error will occur when requesting this balance
+Actual result: players with ID 0 and ID 2 have the same balance 
+","[]","NORMAL","",0,0,"","","Sunday, December 5th 2021, 5:18:31 pm +02:00","Sunday, December 5th 2021, 11:30:27 pm +02:00","","Anna Buhai","HW: Loyalty","HW6: T2021_10 Loyalty","V1 + API ","[]","[]","","[V1 + API ]","[]","","",,0
+"1wek30p","Orders can delete when the Delete order endpoint is requested but user must not have permission to this","in progress","When we call the Delete order endpoint we expected what only the admin can have these rights, because this can break all system. However, when we use the delete order endpoint we have permission to make a request.
+
+
+Severity: Critical
+Build: v1
+
+Step to reproduce:
+1. Call the Delete order endpoint
+DELETE https://qa-loyalty.teaminternational.com/v1/wp-json/wc/v2/orders/7933
+{
+""force"":""true""
+}
+2. Auth 
+Key ck_a47b79beec855b4828ca5f109816c553940dec0b
+Secret cs_9cdf55f7d6d359f7d2042befd3c470126453ea3c 
+Type Basic 
+
+2. Submit a request 
+Expected result: order must have a 403 response code - you cannot delete this resource
+Actual result: status of request is 200 success and order was deleted
+Attachments: success order deleting
+","[]","URGENT","",0,0,"","","Sunday, December 5th 2021, 10:48:02 pm +02:00","Sunday, December 5th 2021, 11:30:37 pm +02:00","","Anna Buhai","HW: Loyalty","HW6: T2021_10 Loyalty","V1 + API ","[]","[]","","[V1 + API ]","[]","","",,0
+"1vc4fbb","HW7: Customer issues","assigned","Please read issues found by the customer and log them 
+
+Endpoint for deleting review doesn't removes reviews. Premission issue.
+Users can find endpoint for deleting ordres, which is working but shouldn't. Permissions issue
+When you creating new review and set rating to 1 or 2 it will always be replaced with 3.
+When you debiting more than 1000 points on wallet balance, it decreased only by 1000 points.
+Endpoint /wallet/balance/0 returns the same value as   /wallet/balance/2.
+Endpoint   /products returns only 10 items.
+New Order request tries create transactions using account for wich API keys created,   instead of defined in reuest body as customer_id.""
+
+
+","[Anna Buhai]","none","The last not reproduce -  customer ID ,  links of order    ",1,0,"","","Saturday, November 27th 2021, 5:43:06 pm +02:00","Sunday, December 5th 2021, 10:38:53 pm +02:00","","Vitaliy Bogatov","HW: Loyalty","HW6: T2021_10 Loyalty","V1 + API ","[]","[]","","[V1 + API ]","[]","","",,0
+"1vc4fee","HW7: Feedback","assigned","Hi,
+
+Your project contains only 4 endpoints and by the homework you must add and test all endpoints specified in the HW.
+Also, I do not see any Test Cases , assertions etc.
+
+
+","[Anna Buhai]","none","",0,0,"","","Saturday, November 27th 2021, 5:44:31 pm +02:00","Friday, December 3rd 2021, 10:34:31 pm +02:00","","Vitaliy Bogatov","HW: Loyalty","HW6: T2021_10 Loyalty","V1 + API ","[]","[]","","[V1 + API ]","[]","","",,0
+"1weef3f","NOT ALL CUSTOMERS ISSUES ARE LOGGED","assigned","","[Anna Buhai]","none","I'm sorry, I thought what ""4. At least one test case with properties and assertions exists"" it was about customer issues and in HW9 no information about customer issues(",1,0,"","","Saturday, December 4th 2021, 1:27:12 am +02:00","Saturday, December 4th 2021, 11:04:52 pm +02:00","","Vitaliy Bogatov","HW: Loyalty","HW6: T2021_10 Loyalty","V1 + API ","[]","[]","","[V1 + API ]","[]","","",,0
+"1tjvvra","Project","Open"," 
+
+ 
+","[]","none","Add all requests in one folder, hope this can fix problem  ",1,0,"","","Thursday, November 18th 2021, 2:41:34 am +02:00","Friday, December 3rd 2021, 10:34:38 pm +02:00","","Anna Buhai","HW: Loyalty","HW6: T2021_10 Loyalty","V1 + API ","[]","[]","","[V1 + API ]","[]","","",,0
+"1t1q0pf","The Balance is only adjusted for 100,000,000 credits, even if more is entered.","reopened","Description: it's working with Credit and Debit cash. 
+
+Severity: Critical
+Build: v1
+Browsers: Safari 15.0
+
+Steps to reproduce:
+Log into the Admin part in V1 (e.g. jaguar/123123);
+Go to the Manage Points
+diting the user balance by clicking the Gear icons at the end of users greed
+Fill in all required fields:
+			- Amount ( pnt ): 200000000
+			- Type: Credit
+			- Notes: any note
+  5.  Click button ""Save Changes""
+
+Expected result: The balance is increased on the specified amount.
+Actual result: The balance is increased only on 100,000,000 pnt. 
+Attachments: balance adding and transaction added 
+
+
+
+The issue has been verified and it is FAILED
+For more information please refer to the attached screenshot 01-12-2021_FAILED 
+
+Fail reason: the bug reproduced 
+
+Test environment
+Build: v2
+Browsers: Safari 15.0
+OS: macOS Big Sur 11.6
+","[Anna Buhai]","URGENT","@Anna Buhai  the bug is reproduced for both versions. Update the bug.  ",1,0,"","","Sunday, November 14th 2021, 10:24:48 pm +02:00","Thursday, December 2nd 2021, 12:09:23 am +02:00","","Anna Buhai","HW: Loyalty","HW6: T2021_10 Loyalty","V2","[]","[]","","[V2]","[]","","",,0
+"1vqnbmz","Missing ""Add order"" and ""Bulk actions"" drop-down menu in Orders page in Admin part legacy","reopened","Description: The button add order and ""bulk actions"" to change status of order not added to the page Orders in admin part of Legacy build, but added in V1. It's made work with Admin panel uncomfortable. 
+
+Severity: Magor
+Build: Legacy
+Browsers: Safari 15.0
+
+Steps to reproduce:
+Log into Legacy build of Loyalty Portal https://qa-loyalty.teaminternational.com/legacy/ (e.g. jaguar/123123)
+Go to the Manage points > Orders
+
+Expected result: Admin can change status of order and add new order in page Orders like in V1 
+Actual result: The page doesn't have these options
+Attachments: page ""Orders"" in V1 , page orders in Legacy 
+
+The issue has been verified and it is FAILED  
+For more information please refer to the attached screen-shot 01-12-2021_FAILED
+
+Fail reason: missing button Add order
+
+Test environment
+Build: v2
+Browsers: Safari 15.0
+OS: macOS Bid Sur 11.6
+","[Anna Buhai]","NORMAL","",0,0,"","","Tuesday, November 30th 2021, 11:06:39 pm +02:00","Thursday, December 2nd 2021, 9:15:29 pm +02:00","","Anna Buhai","HW: Loyalty","HW6: T2021_10 Loyalty","V2","[]","[]","","[V2]","[]","","",,0
+"1t1pjfg","The transaction history entries are not returned if using pagination by writing a page number","reopened","Description: Using pagination can only when entries are more than 12 (not included). 
+
+Severity: Trivial
+Build: v1 
+Browsers: Safari 15.0
+
+Steps to reproduce:
+Log into the Admin part in V1 (e.g. jaguar/123123);
+Go to the Manage Points
+Previewing Transaction history of user (e.g Annatest) by clicking the Eye in the end of user entries 
+Go to the pagination and enter a 2 page in the field (please refer to attachment 1)
+
+Expected result: The pagination should be only readable page field and user can navigate between the pages by arrows.
+Actual result: The page is empty without any data https://qa-loyalty.teaminternational.com/v1/wp-admin/admin.php?_wpnonce=936bd79fe4&_wp_http_referer=%2Fv1%2Fwp-admin%2Fadmin.php%3Fpage%3Dwoo-wallet-transactions%26user_id%3D67&paged=2
+Attachments: enter pagination, Page 2
+
+The issue has been verified and it is FAILED
+For more information please refer to the attached screen-shot 01-12-2021_FAILED
+
+Fail reason: the bug is reproduced 
+
+Test environment
+Build: v2
+Browsers: Safari 15.0
+OS: macOS Big Sur 11.6
+
+
+","[Anna Buhai]","LOW","@Anna Buhai  Update the bug.   The issue is reproduced for v1 too.    Expected result: pagination should have only readable page field. The end-user can navigate between the page by arrows.   not clear where exactly I can fing the issue - add corresponding link of the page to the steps.  ",1,0,"","","Sunday, November 14th 2021, 8:03:46 pm +02:00","Thursday, December 2nd 2021, 12:29:37 am +02:00","","Anna Buhai","HW: Loyalty","HW6: T2021_10 Loyalty","V2","[]","[]","","[V2]","[]","","",,0
+"1kj8mk0","Sorting in Transaction page in User part don't work","reopened","Description: The sorting isn't adding to the page, only in the ID column, but doesn't work too.
+
+Severity: Trivial
+Build: v1
+Browsers: Safari 15.0
+
+Steps to reproduce:
+Log into User's part of Loyalty Portal (e.g. test/123123)
+Go to the Transactions
+Try to sorting column by clicking of the name of column
+
+Expected result: User can sort entries by each column
+Actual result: The sorting isn't work 
+Attachments: sorting in transactions
+
+
+The issue has been verified and it is FAILED
+For more information please refer to the attached screen-shot 01-12-2021_FAILED
+
+Fail reason: the bug is reproduced 
+
+Test environment
+Build: v2 
+Browsers: Safari 15.0 
+OS: macOS Bug Sur 11.6
+
+","[Anna Buhai]","LOW","@Anna Buhai  Update the priority and severity. The issue doesn't brake the website and it is not a major functionality.  ",1,0,"","","Monday, November 15th 2021, 12:22:33 am +02:00","Thursday, December 2nd 2021, 12:37:22 am +02:00","","Anna Buhai","HW: Loyalty","HW6: T2021_10 Loyalty","V2","[]","[]","","[V2]","[]","","",,0
+"1t1q3y4","The name of column ""Balance"" on Home Page in Admin and User panels  is wrong","verified","Description: Maybe it's changing in one time in both part of panel at the same time.
+
+Severity: Trivial
+Build: v1
+Browsers: Safari 15.0
+
+Steps to reproduce:
+Log into admin panel in Version 1 (e.g jaguar/123123)
+Go to column Balance in the center of page
+
+Expected result: Name of column - Balance 
+Actual result: Name of column - Balacne
+Attachments: screenshot of homepage
+
+
+The issue has been verified and it is FIXED
+For more information please refer to the attached screenshot 01-12-2021_PASSED
+
+Test environment
+Build: v2 
+Browsers: Safari 15.0
+OS: macOS Big Sur 11.6
+","[Anna Buhai]","LOW","@Anna Buhai  Wrong Actaul result.  ",1,0,"","","Sunday, November 14th 2021, 10:58:48 pm +02:00","Wednesday, December 1st 2021, 11:08:10 pm +02:00","","Anna Buhai","HW: Loyalty","HW6: T2021_10 Loyalty","V2","[]","[]","","[V2]","[]","","",,0
+"1vxanfc","The last breadcrumb is duplicated on Product categories pages in V1 build","verified","Description: in product categories breadcrumbs are duplicated, one of them clickable, another not. In product page detailing breadcrumbs are displayed correctly. The error is due to the name product/ category/ between Home and breadcrumb. Screenshot from Chrome Devtools.
+
+Severity: Minor
+Build: v1
+Browsers: Chrome 96
+
+Steps to reproduce:
+Log into V1 build of Loyalty Portal https://qa-loyalty.teaminternational.com/v1/ (e.g. jaguar/123123)
+Go to the Manage points page
+Go to the Manage points > Visit Store 
+Open any category below filters (e.g. For her)
+Go to the breadcrumbs at the top of the page.
+
+Expected result: The breadcrumbs have looked like Home/""product category"" (last crumb unclickable)
+Actual result: The breadcrumbs have looked like Home /product category/ product category
+Attachments: example of breadcrumbs
+
+The issue has been verified and it is FIXED
+For more information please refer to the attached screenshot 1-12-2021_PASSED 
+
+Test environment
+Build: v2
+Browsers: Safari 15.0
+OS: macOS Big Sur 11.6
+
+","[]","LOW","",0,0,"","","Wednesday, December 1st 2021, 6:43:39 pm +02:00","Wednesday, December 1st 2021, 11:18:32 pm +02:00","","Anna Buhai","HW: Loyalty","HW6: T2021_10 Loyalty","V2","[]","[]","","[V2]","[]","","",,0
+"1vxbze6","The wrong validation message on Checkout page when current balance less than total sum","verified","Description: The validation message when balance less than purchase sum in build V1 is different than in Legacy build. 
+
+Severity: Trivial
+Build: V1
+Browsers: Safari 15.0
+
+Steps to reproduce:
+Log into Legacy build of Loyalty Portal https://qa-loyalty.teaminternational.com/legacy/ (e.g. jaguar/123123)
+Go to the Manage points
+Go to the Manage points > Visit store
+Check that there is an item in the cart
+Check that your balance less than price of items on the card
+Go to the Checkout page
+Go down the page to the Validation message
+
+Expected result: The validation message is ""Your wallet balance is low. Please add ... pnt to proceed with this transaction.""
+Actual result: The validation message is ""Sorry, it seems that there are no available payment methods for your state. Please contact us if you require assistance or wish to make alternate arrangements.""
+Attachments: validation message in legacy build, validation message in V1 build
+
+The issue has been verified and it is FIXED
+For more information please refer to the attached scheenshot 01-12-2021_PASSED
+
+Test environment
+Build: v2 
+Browsers: Safari 15.0
+OS: macOS Big Sur 11.6
+","[]","LOW","",0,0,"","","Wednesday, December 1st 2021, 10:03:33 pm +02:00","Friday, December 3rd 2021, 12:23:35 am +02:00","","Anna Buhai","HW: Loyalty","HW6: T2021_10 Loyalty","V2","[]","[]","","[V2]","[]","","",,0
+"1vxabgd","The product price in block ""Related products"" partially covered by ""Add to card"" button in product details page","verified","Description: in product page detailing on the block ""related products"" price difficult to read
+
+Severity: Minor
+Build: v1
+Browsers: Chrome 96
+
+Steps to reproduce:
+Log into V1 build of Loyalty Portal https://qa-loyalty.teaminternational.com/v1/ (e.g. jaguar/123123)
+Go to the Manage points page
+Go to the Manage points > Visit Store 
+Open any product, except ""Baby tiger's jungle adventure book"" (e.g Castelbel Ambiente Soap)
+Go at the bottom of the page to the Related products
+
+Expected result: The price of additional products is displayed correctly and can view the price fully. 
+Actual result: The price is partially hidden by a button ""Add to card""
+Attachments: hidden price 
+
+
+The issue has been verified and it is FIXED
+For more information please refer to the attached screen-shot 01-12-2021_PASSED
+
+Test environment
+Build: v2
+Browsers: Safari 15.0
+OS: macOS Big Sur 11.6
+","[]","HIGH","",0,0,"","","Wednesday, December 1st 2021, 6:18:58 pm +02:00","Thursday, December 2nd 2021, 12:25:15 am +02:00","","Anna Buhai","HW: Loyalty","HW6: T2021_10 Loyalty","V2","[]","[]","","[V2]","[]","","",,0
+"1vqnh38","Server error (500) if opening product detail page with an apostrophe in the name in V1","verified","Description: when viewing details of products with apostrophe in the product name, the server gives out an unwanted response code, so the server cannot to process the request. 
+
+Severity: Critical 
+Build: v1
+Browsers: Safari 15.0, Chrome 96
+
+Steps to reproduce:
+Log into V1 build of Loyalty Portal https://qa-loyalty.teaminternational.com/v1/ (e.g. jaguar/123123)
+Go to the Manage points page
+Go to the Manage points > Visit Store 
+On first page open product ""Baby Tiger's jungle adventure book""
+
+Expected result: The product details are opening correctly 
+Actual result: The page have 500 response code 
+Attachments: 500 error page, example of products 
+
+
+The issue has been verified and it is FIXED
+ For more information please refer to the attached screenshot 01-12-2021_PASSED
+ 
+ Test environment
+ Build: v2
+ Browsers: Chrome 96
+ OS: Win 10
+","[]","URGENT","",0,0,"","","Tuesday, November 30th 2021, 11:58:00 pm +02:00","Thursday, December 2nd 2021, 10:20:36 am +02:00","","Anna Buhai","HW: Loyalty","HW6: T2021_10 Loyalty","V2","[]","[]","","[V2]","[]","","",,0
+"1t1q5r0","The Transaction resizing in User part do not meet the requirements and have values 10, 20, 40, 80 but resizing is correct","verified","Description: in SRS pointed that the size changes by 10, 25, 50 and 100 options. And number of entries changes correct. So bug in line ""Show ... entries"" - the features work correct. 
+
+Severity: Low
+Build: v1
+Browsers: Safari 15.0
+
+Steps to reproduce:
+Log into the Version 1 User part (e.g test/123123)
+Go to the Transactions 
+Click the drop-down list ""Show 10, 20, 40, 80 entries""
+
+Expected result: User can change the amount of entries to show on the page by switching between 10, 25, 50 and 100 options
+Actual result: User change amount of entries correct, but the names of a list of switching aren't correct.
+Attachments: changing size of entries , the list of resizing
+
+
+The issue has been verified and it is FIXED
+For more information please refer to the attached screen-shot 01-12-2021_PASSED
+
+Test environment
+Build: v2
+Browsers: Safari 15.0
+OS: macOS Big Sur 11.6
+
+","[Anna Buhai]","LOW","",0,0,"","","Sunday, November 14th 2021, 11:17:02 pm +02:00","Thursday, December 2nd 2021, 12:34:20 am +02:00","","Anna Buhai","HW: Loyalty","HW6: T2021_10 Loyalty","V2","[]","[]","","[V2]","[]","","",,0
+"1vxc9xn","Sorting by Remaining balance is incorrect work with small numbers of pnt","verified","Description: sorting by remaining balance may sort by low to high credits and start with 0, because negative values are not accepted by the system. 
+
+Severity: Trivial
+Build: v2
+Browsers: Safari 15.0
+
+Steps to reproduce:
+Log into Admin part of Loyalty Portal https://qa-loyalty.teaminternational.com/v2/ (e.g. jaguar/123123)
+Go to the Manage points 
+Go to the Points balance page
+Sort column by Remaining balance by clicking of the name of column
+
+Expected result: User can sort entries by this column to low to high
+Actual result: The sorting doesn't work with small sum (less 1000)
+Attachments: sorting in points balance page by remaining 
+","[Anna Buhai]","LOW","",0,0,"","","Thursday, December 2nd 2021, 12:01:09 am +02:00","Thursday, December 2nd 2021, 9:21:22 pm +02:00","","Anna Buhai","HW: Loyalty","HW6: T2021_10 Loyalty","V2","[]","[]","","[V2]","[]","","",,0
